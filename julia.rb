@@ -2,7 +2,8 @@ require 'formula'
 
 class Julia < Formula
   homepage 'http://julialang.org'
-  head 'https://github.com/JuliaLang/julia.git'
+############################# Change back to JuliaLang/julia.git
+  head 'https://github.com/staticfloat/julia.git'
 
   depends_on "readline"
   depends_on "pcre"
@@ -21,6 +22,9 @@ class Julia < Formula
 
     # Julia ignores CPPFLAGS and only uses CFLAGS, so we must store CPPFLAGS into CFLAGS
     ENV.append_to_cflags ENV['CPPFLAGS']
+
+    # Hack to allow julia to pull in the git version
+    ENV['GIT_DIR'] = cached_download/'.git'
 
     # This from @ijt's formula, with possible exclusion if @sharpie makes standard for ENV.fortran builds
     libgfortran = `$FC --print-file-name libgfortran.a`.chomp
